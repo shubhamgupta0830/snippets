@@ -1,0 +1,8 @@
+Flask
+Flask-CORS
+Flask-SQLAlchemy
+gunicorn
+openai
+requests
+beautifulsoup4
+psycopg2-binary
