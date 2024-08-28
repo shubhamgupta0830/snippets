@@ -6,6 +6,7 @@ import openai
 import os
 import requests
 from bs4 import BeautifulSoup
+from app import app, db
 
 app = Flask(__name__)
 CORS(app)
