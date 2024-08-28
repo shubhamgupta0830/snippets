@@ -40,6 +40,9 @@ def get_article_content(url):
     article = ' '.join([p.text for p in soup.find_all('p')])
     return article
 
+with app.app_context():
+    db.create_all()
+
 @app.route('/')
 def index():
     return render_template('index.html')

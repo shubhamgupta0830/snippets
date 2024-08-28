@@ -6,3 +6,4 @@ openai==0.28
 requests
 beautifulsoup4
 psycopg2-binary
+app
