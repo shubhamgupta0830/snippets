@@ -2,7 +2,7 @@ Flask
 Flask-CORS
 Flask-SQLAlchemy
 gunicorn
-openai
+openai==0.28
 requests
 beautifulsoup4
 psycopg2-binary
