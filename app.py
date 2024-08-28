@@ -56,6 +56,7 @@ def summarize():
     chars_per_paragraph = data.get('chars_per_paragraph', 150)
     
     article_text = get_article_content(url)
+    article_text = article_text[:10000]
     
     # Generate detailed summary
     summary_response = openai.ChatCompletion.create(
