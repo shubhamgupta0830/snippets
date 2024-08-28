@@ -8,7 +8,7 @@ import os
 import requests
 from bs4 import BeautifulSoup
 from youtube_transcript_api import YouTubeTranscriptApi
-import fitz
+# import fitz
 # from app import app, db
 
 app = Flask(__name__)
@@ -60,25 +60,25 @@ def get_article_content(url):
             return f"Error retrieving transcript: {e}"
 
         # Check if the URL is a PDF
-    if url.lower().endswith('.pdf'):
-        try:
-            response = requests.get(url)
-            with open('temp.pdf', 'wb') as f:
-                f.write(response.content)
+    # if url.lower().endswith('.pdf'):
+    #     try:
+    #         response = requests.get(url)
+    #         with open('temp.pdf', 'wb') as f:
+    #             f.write(response.content)
 
-            # Extract text from PDF
-            pdf_text = ''
-            with fitz.open('temp.pdf') as pdf:
-                for page_num in range(pdf.page_count):
-                    page = pdf.load_page(page_num)
-                    pdf_text += page.get_text()
+    #         # Extract text from PDF
+    #         pdf_text = ''
+    #         with fitz.open('temp.pdf') as pdf:
+    #             for page_num in range(pdf.page_count):
+    #                 page = pdf.load_page(page_num)
+    #                 pdf_text += page.get_text()
 
-            return pdf_text
-        except Exception as e:
-            return f"Error retrieving PDF content: {e}"
-        finally:
-            # Clean up the temporary PDF file
-            os.remove('temp.pdf')
+    #         return pdf_text
+    #     except Exception as e:
+    #         return f"Error retrieving PDF content: {e}"
+    #     finally:
+    #         # Clean up the temporary PDF file
+    #         os.remove('temp.pdf')
     
     # If not a YouTube URL, treat it as an article
     response = requests.get(url)

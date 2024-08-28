@@ -7,6 +7,6 @@ requests
 beautifulsoup4
 psycopg2-binary
 youtube_transcript_api
-fitz
-frontend
-PyMuPDF
+# fitz
+# frontend
+# PyMuPDF
