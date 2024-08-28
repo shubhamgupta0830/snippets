@@ -18,7 +18,7 @@
             height: 100vh;
         }
         .input-container {
-            padding: 20px;
+            display: flex;
             background-color: #f0f0f0;
             z-index: 1000;
         }
@@ -151,7 +151,7 @@
     firstCard.innerHTML = `
         <h2>${summary.headline}</h2>
         <p>${summary.short_summary}</p>
-        <a href="${summary.url}" target="_blank">Read full article</a>
+        <a href="${summary.url}" target="_blank">Go to source</a>
     `;
     element.appendChild(firstCard);
 
@@ -166,6 +166,7 @@
     });
     
     element.appendChild(cardsContainer);
+    // <a href="${summary.url}" target="_blank">Read full article</a>
     return element;
 }
 
