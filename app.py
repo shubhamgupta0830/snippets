@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
 import openai
 import os
 import requests
@@ -9,8 +10,15 @@ from bs4 import BeautifulSoup
 app = Flask(__name__)
 CORS(app)
 
-# Database configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+# Get the DATABASE_URL from environment variable
+database_url = os.environ.get('DATABASE_URL')
+
+# Replace 'postgres://' with 'postgresql://' if necessary
+if database_url and database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql://", 1)
+
+# Configure SQLAlchemy
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
