@@ -10,4 +10,3 @@ youtube_transcript_api
 fitz
 frontend
 PyMuPDF
-os
