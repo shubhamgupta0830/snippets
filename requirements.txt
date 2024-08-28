@@ -7,7 +7,7 @@ requests
 beautifulsoup4
 psycopg2-binary
 youtube_transcript_api
-urllib.parse
+urllib
 fitz
 frontend
 PyMuPDF
