@@ -102,6 +102,7 @@ def summarize():
     
     article_text = get_article_content(url)
     article_text = article_text[:10000]
+    print(article_text)
     
     # Generate detailed summary
     summary_response = openai.ChatCompletion.create(
