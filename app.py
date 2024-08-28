@@ -1,3 +1,4 @@
+from urllib.parse import parse_qs, urlparse
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -6,6 +7,8 @@ import openai
 import os
 import requests
 from bs4 import BeautifulSoup
+from youtube_transcript_api import YouTubeTranscriptApi
+import fitz
 # from app import app, db
 
 app = Flask(__name__)
@@ -36,6 +39,48 @@ class Summary(db.Model):
     image_url = db.Column(db.String(500), nullable=False)
 
 def get_article_content(url):
+    # Check if the URL is a YouTube video
+    if 'youtube.com/watch' in url or 'youtu.be/' in url:
+        # Extract the video ID from the URL
+        parsed_url = urlparse(url)
+        video_id = parse_qs(parsed_url.query).get('v')
+        
+        if not video_id:  # For short YouTube URLs (youtu.be)
+            video_id = parsed_url.path.split('/')[-1]
+        else:
+            video_id = video_id[0]
+
+        # Get the transcript using YouTubeTranscriptApi
+        try:
+            transcript = YouTubeTranscriptApi.get_transcript(video_id)
+            # Combine the transcript parts into a single string
+            transcript_text = ' '.join([t['text'] for t in transcript])
+            return transcript_text
+        except Exception as e:
+            return f"Error retrieving transcript: {e}"
+
+        # Check if the URL is a PDF
+    if url.lower().endswith('.pdf'):
+        try:
+            response = requests.get(url)
+            with open('temp.pdf', 'wb') as f:
+                f.write(response.content)
+
+            # Extract text from PDF
+            pdf_text = ''
+            with fitz.open('temp.pdf') as pdf:
+                for page_num in range(pdf.page_count):
+                    page = pdf.load_page(page_num)
+                    pdf_text += page.get_text()
+
+            return pdf_text
+        except Exception as e:
+            return f"Error retrieving PDF content: {e}"
+        finally:
+            # Clean up the temporary PDF file
+            os.remove('temp.pdf')
+    
+    # If not a YouTube URL, treat it as an article
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
     article = ' '.join([p.text for p in soup.find_all('p')])

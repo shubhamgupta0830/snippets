@@ -6,3 +6,9 @@ openai==0.28
 requests
 beautifulsoup4
 psycopg2-binary
+youtube_transcript_api
+urllib.parse
+fitz
+frontend
+PyMuPDF
+os
