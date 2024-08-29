@@ -111,7 +111,7 @@ def summarize():
             {"role": "system", "content": "You are a helpful assistant that summarizes articles."},
             {"role": "user", "content": f"Summarize the following article in {num_paragraphs} paragraphs. Each paragraph should be approximately {chars_per_paragraph} characters long and cover a core point of the article. Only talk about the topic that has maximum content. Don't include anything that isn't related to the core article. Ensure each paragraph is a complete thought and doesn't end mid-sentence:\n\n{article_text}"}
         ],
-        max_tokens=num_paragraphs * chars_per_paragraph*2 // 4
+        max_tokens=num_paragraphs * chars_per_paragraph*3 // 4
     )
     
     detailed_summary = summary_response.choices[0].message['content'].strip().split('\n\n')
